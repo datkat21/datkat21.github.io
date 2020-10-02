@@ -193,8 +193,9 @@ footer{
 }
 
 img {
+    width: 23px;
     border-radius: 100px;
     vertical-align: middle;
-    display: inline;
-    width: 75px;
+
 }
+

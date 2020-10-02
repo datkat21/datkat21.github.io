@@ -1,0 +1,23 @@
+<head>
+    <title>Begin</title>
+    <link type="text/css" rel="stylesheet" href="../../css/style.css" />
+    <script type="text/jsx" src="../render.jsx"></script>
+    <script type="text/jsx" src="index.jsx"></script>
+    <script type="text/javascript">
+        function myFunction() {
+            var GitUrl = document.getElementsByName("GitUrl")[0].value;
+            render(); // The function returns the product of p1 and p2
+        }
+    </script>
+</head>
+
+<body>
+    <form action="begin-create-done.html" method="get">
+        User/Repo URL:<br><br> <input type="text" name="GitUrl">
+        <br>
+
+    </form>
+</body>
+<button onClick={fetchGithub}>Fetch Github</button>
+ <!--button that should run script-->
+</html>
