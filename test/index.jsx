@@ -5,6 +5,7 @@
 * Example Github api request:
 * https://api.github.com/repos/ta-dachi/eatsleepcode.tech/branches/master
 */
+function call(){
 class LatestCommitComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -70,3 +71,4 @@ class LatestCommitComponent extends React.Component {
     ;
 }
 ReactDOM.render(<LatestCommitComponent />, document.getElementById("root"));
+}

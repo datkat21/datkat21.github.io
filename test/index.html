@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>React Local</title>
+    
     <script
       type="application/javascript"
       src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"
@@ -19,15 +21,16 @@
       type="application/javascript"
       src="https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js"
     ></script>
-  </head>
-
-<body>
-        User/Repo URL:<br><br> <input type="text" name="GitUrl">
-        <br>
-
-    </form>
     <script type="text/jsx" src="index.jsx"></script>
+  </head>
+<html>
+<body>
+<label>Enter your Name here: </label><br>
+<input type= text id="namehere"><br>
+
+
+<button onclick="call()">Get</button>
+
+<br>
 </body>
-<button onClick={myFunction}>Fetch Github</button>
- <!--button that should run script-->
-</html>
+</html> 
