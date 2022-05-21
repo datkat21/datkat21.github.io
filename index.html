@@ -1,30 +1,467 @@
 <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kat21's website</title>
+    <style>
+        /* Enough CSS to show the frontpage */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: white;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #25BD85;
+            flex-direction: column;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            gap: 1rem;
+            position: relative;
+        }
+
+        body.dark main::before {
+            opacity: 1;
+        }
+
+        main::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='1920' height='1080' viewBox='0 0 1920 1080' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1920 0.000488281H0V1080H1920V0.000488281Z' fill='%23383838'/%3E%3Cpath d='M302.995 0L685.602 1080H1418.31C1449.89 764.464 1523.63 463.908 1137.92 0H302.995Z' fill='%232E2E2E'/%3E%3Cpath d='M0.00292969 0V1080H783.762C851.521 459.998 427.713 625.576 681.212 0H0.00292969Z' fill='%23222222'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        body:not(.dark) main::before {
+            opacity: 0;
+        }
+
+        body:not(.dark) main::after {
+            opacity: 1;
+        }
+
+        main::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='1920' height='1081' viewBox='0 0 1920 1081' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1920 0.612549H0V1080.61H1920V0.612549Z' fill='%2325BD85'/%3E%3Cpath d='M302.995 0.612061L685.602 1080.61H1418.31C1449.89 765.076 1523.63 464.52 1137.92 0.612061H302.995Z' fill='%2326C389'/%3E%3Cpath d='M0.00292969 0.612061V1080.61H783.762C851.521 460.611 427.713 626.188 681.212 0.612061H0.00292969Z' fill='%2329D092'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+        }
+
+        body.dark main::after {
+            opacity: 0 !important;
+        }
+
+        section {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #25BD85;
+            width: 100%;
+            padding: 1rem 0;
+        }
+
+        section:nth-child(even) {
+            background-color: #29d092;
+        }
+
+        section:nth-child(odd) {
+            background-color: #26c389;
+        }
+
+        body.dark section:nth-child(even) {
+            background-color: #222222;
+        }
+        body.dark section:nth-child(odd) {
+            background-color: #2e2e2e;
+        }
+
+        h1,
+        h2,
+        p {
+            text-align: center;
+            margin: 0;
+        }
+
+        .hint {
+            bottom: 25px;
+            position: absolute;
+            animation: hint-bounce 1.5s ease infinite;
+        }
+
+        @keyframes hint-bounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .visually-hidden {
+            visibility: hidden;
+            position: absolute;
+        }
+
+        .stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .card {
+            border-radius: 3px;
+            background-color: #568574;
+            max-width: 300px;
+            height: 100%;
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .project {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .project .card {
+            box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+        }
+
+        .project:nth-child(odd) .text p,
+        .project:nth-child(odd) .text h2 {
+            text-align: left !important;
+        }
+
+        .project:nth-child(odd) .card {
+            transform: rotate(-1deg);
+        }
+
+        .project:nth-child(even) .text p,
+        .project:nth-child(even) .text h2 {
+            text-align: right !important;
+        }
+
+        .project:nth-child(even) .card {
+            transform: rotate(1deg);
+        }
+
+        .project:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media screen and (max-width: 800px) {
+
+            .project:nth-child(even) .text p,
+            .project:nth-child(even) .text h2,
+            .project:nth-child(odd) .text p,
+            .project:nth-child(odd) .text h2 {
+                text-align: center !important;
+            }
+
+            .project:nth-child(even) .card,
+            .project:nth-child(odd) .card {
+                transform: rotate(0deg);
+            }
+
+            .project {
+                flex-direction: column !important;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .lampshade {
+            position: absolute;
+            top: -20px;
+            right: 15px;
+            z-index: 1;
+        }
+
+        @keyframes lampshade-out {
+            0% {
+                transform: unset;
+            }
+
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        @keyframes lampshade-in {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: unset;
+            }
+        }
+
+        .lampshade-out {
+            animation: lampshade-out 1s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+        }
+
+        .lampshade-in {
+            animation: lampshade-in 1s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+        }
+
+        #lampshade-box {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: -20px;
+        }
+    </style>
+</head>
 
 <body>
-
-    <head>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
-        </style>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-
-    <html>
-    <div class="nav">
-        <h2>Kat21's site</h2>
-        <!-- navbar-->
-        <ul>
-            <li><a href="index.html"><b>Home</b></a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-        <!-- end navbar-->
+    <div id="lampshade-box">
+        <svg class="lampshade to-light" width="49" height="214" viewBox="0 0 49 214" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M24.4998 16.4615C29.0456 16.4615 32.7306 12.7765 32.7306 8.23077C32.7306 3.68504 29.0456 0 24.4998 0C19.9541 0 16.2691 3.68504 16.2691 8.23077C16.2691 12.7765 19.9541 16.4615 24.4998 16.4615ZM24.4998 91.2058C29.0456 91.2058 32.7306 87.5208 32.7306 82.9751C32.7306 78.4293 29.0456 74.7443 24.4998 74.7443C19.9541 74.7443 16.2691 78.4293 16.2691 82.9751C16.2691 87.5208 19.9541 91.2058 24.4998 91.2058ZM32.7306 45.6029C32.7306 50.1486 29.0456 53.8337 24.4998 53.8337C19.9541 53.8337 16.2691 50.1486 16.2691 45.6029C16.2691 41.0572 19.9541 37.3721 24.4998 37.3721C29.0456 37.3721 32.7306 41.0572 32.7306 45.6029ZM24.4998 128.578C29.0456 128.578 32.7306 124.893 32.7306 120.347C32.7306 115.801 29.0456 112.116 24.4998 112.116C19.9541 112.116 16.2691 115.801 16.2691 120.347C16.2691 124.893 19.9541 128.578 24.4998 128.578ZM32.7306 26.9168C32.7306 31.4626 29.0456 35.1476 24.4998 35.1476C19.9541 35.1476 16.2691 31.4626 16.2691 26.9168C16.2691 22.3711 19.9541 18.6861 24.4998 18.6861C29.0456 18.6861 32.7306 22.3711 32.7306 26.9168ZM24.4998 109.892C29.0456 109.892 32.7306 106.207 32.7306 101.661C32.7306 97.1154 29.0456 93.4304 24.4998 93.4304C19.9541 93.4304 16.2691 97.1154 16.2691 101.661C16.2691 106.207 19.9541 109.892 24.4998 109.892ZM32.7306 64.289C32.7306 68.8347 29.0456 72.5198 24.4998 72.5198C19.9541 72.5198 16.2691 68.8347 16.2691 64.289C16.2691 59.7433 19.9541 56.0582 24.4998 56.0582C29.0456 56.0582 32.7306 59.7433 32.7306 64.289ZM24.4998 147.264C29.0456 147.264 32.7306 143.579 32.7306 139.033C32.7306 134.488 29.0456 130.802 24.4998 130.802C19.9541 130.802 16.2691 134.488 16.2691 139.033C16.2691 143.579 19.9541 147.264 24.4998 147.264ZM20.5557 154.435C22.5334 151.454 26.9112 151.454 28.8889 154.435L39.8828 171.009C45.2951 175.456 48.7472 182.201 48.7472 189.753C48.7472 203.144 37.8913 214 24.4998 214C11.1084 214 0.252441 203.144 0.252441 189.753C0.252441 181.779 4.10082 174.705 10.0414 170.286L20.5557 154.435Z"
+                fill="#292929" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M40.2939 189.854C38.4555 194.358 33.9693 197.539 28.7267 197.539C21.8467 197.539 16.2693 192.061 16.2693 185.304C16.2693 180.666 18.8959 176.632 22.7677 174.557C15.3217 175.614 9.5957 182.015 9.5957 189.753C9.5957 198.23 16.4678 205.102 24.945 205.102C33.3883 205.102 40.2393 198.285 40.2939 189.854Z"
+                fill="#D9D9D9" />
+        </svg>
+        <svg class="lampshade to-dark" width="49" height="214" viewBox="0 0 49 214" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M24.4998 16.4615C29.0456 16.4615 32.7306 12.7765 32.7306 8.23077C32.7306 3.68504 29.0456 0 24.4998 0C19.9541 0 16.2691 3.68504 16.2691 8.23077C16.2691 12.7765 19.9541 16.4615 24.4998 16.4615ZM24.4998 91.2058C29.0456 91.2058 32.7306 87.5208 32.7306 82.9751C32.7306 78.4293 29.0456 74.7443 24.4998 74.7443C19.9541 74.7443 16.2691 78.4293 16.2691 82.9751C16.2691 87.5208 19.9541 91.2058 24.4998 91.2058ZM32.7306 45.6029C32.7306 50.1486 29.0456 53.8337 24.4998 53.8337C19.9541 53.8337 16.2691 50.1486 16.2691 45.6029C16.2691 41.0572 19.9541 37.3721 24.4998 37.3721C29.0456 37.3721 32.7306 41.0572 32.7306 45.6029ZM24.4998 128.578C29.0456 128.578 32.7306 124.893 32.7306 120.347C32.7306 115.801 29.0456 112.116 24.4998 112.116C19.9541 112.116 16.2691 115.801 16.2691 120.347C16.2691 124.893 19.9541 128.578 24.4998 128.578ZM32.7306 26.9168C32.7306 31.4626 29.0456 35.1476 24.4998 35.1476C19.9541 35.1476 16.2691 31.4626 16.2691 26.9168C16.2691 22.3711 19.9541 18.6861 24.4998 18.6861C29.0456 18.6861 32.7306 22.3711 32.7306 26.9168ZM24.4998 109.892C29.0456 109.892 32.7306 106.207 32.7306 101.661C32.7306 97.1154 29.0456 93.4304 24.4998 93.4304C19.9541 93.4304 16.2691 97.1154 16.2691 101.661C16.2691 106.207 19.9541 109.892 24.4998 109.892ZM32.7306 64.289C32.7306 68.8347 29.0456 72.5198 24.4998 72.5198C19.9541 72.5198 16.2691 68.8347 16.2691 64.289C16.2691 59.7433 19.9541 56.0582 24.4998 56.0582C29.0456 56.0582 32.7306 59.7433 32.7306 64.289ZM24.4998 147.264C29.0456 147.264 32.7306 143.579 32.7306 139.033C32.7306 134.488 29.0456 130.802 24.4998 130.802C19.9541 130.802 16.2691 134.488 16.2691 139.033C16.2691 143.579 19.9541 147.264 24.4998 147.264ZM20.5557 154.435C22.5334 151.454 26.9112 151.454 28.8889 154.435L39.8828 171.009C45.2951 175.456 48.7472 182.201 48.7472 189.753C48.7472 203.144 37.8913 214 24.4998 214C11.1084 214 0.252441 203.144 0.252441 189.753C0.252441 181.779 4.10082 174.705 10.0414 170.286L20.5557 154.435Z"
+                fill="white" />
+            <circle cx="24.5002" cy="190.197" r="15.3493" fill="#FCB853" />
+            <circle cx="24.5" cy="190.197" r="11.79" fill="white" fill-opacity="0.25" />
+        </svg>
     </div>
-    <h1>Welcome</h1>
-    <p>This is my website!</p>
-<i class="small">I know it's very bad, I'm still working on it.</i><br><br>
-<footer>Last updated 10/2/2020. © Kat21 2020</footer>
-    </html>
+    <script>
+        (() => {
+            document.getElementById('lampshade-box').style.display = 'block';
+            if (localStorage.getItem('theme') === null)
+                localStorage.setItem('theme', 'light');
+
+            let theme = localStorage.getItem('theme');
+
+            function themeCheck() {
+                if (theme === 'light') {
+                    document.querySelector('.lampshade.to-light').style.display = 'block';
+                    document.querySelector('.lampshade.to-dark').style.display = 'none';
+                    document.body.classList.remove('dark');
+                } else {
+                    document.querySelector('.lampshade.to-light').style.display = 'none';
+                    document.querySelector('.lampshade.to-dark').style.display = 'block';
+                    document.body.classList.add('dark');
+                }
+            }
+
+            function setTheme() {
+                let currentTheme = localStorage.getItem('theme');
+                if (currentTheme === 'light') {
+                    currentTheme = 'dark';
+                    document.body.classList.add('dark');
+                } else {
+                    currentTheme = 'light';
+                    document.body.classList.remove('dark');
+                }
+                localStorage.setItem('theme', currentTheme);
+                return currentTheme;
+            }
+
+            themeCheck();
+
+            let lampshadeIsClickable = true;
+
+            document.getElementById('lampshade-box').addEventListener('click', () => {
+                if (lampshadeIsClickable !== true) return;
+
+                lampshadeIsClickable = false;
+                // add lampshade-out to "to-"(light/dark)
+                document.querySelector('.lampshade.to-' + theme).classList.add('lampshade-out');
+                setTimeout(() => {
+                    // change the theme to the opposite
+                    theme = setTheme();
+                    setTimeout(() => {
+                        // remove lampshade-out from "to-"(light/dark)
+                        document.querySelector('.lampshade.to-' + theme).classList.remove('lampshade-out');
+                        document.querySelector('.lampshade.to-' + theme).classList.add('lampshade-in');
+                        setTimeout(() => {
+                            // remove lampshade-in from "to-"(light/dark)
+                            document.querySelector('.lampshade.to-' + theme).classList.remove('lampshade-in');
+                            lampshadeIsClickable = true;
+                        }, 1000);
+                        themeCheck();
+                    }, 700);
+                }, 300);
+            });
+        })();
+    </script>
+    <main>
+        <div class="stack">
+            <h1>hey there, i'm</h1>
+            <div class="visually-hidden">Kat.</div>
+            <svg width="98" height="43" viewBox="0 0 98 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M31.0661 9.07202C33.9246 11.8471 37.8409 13.694 39.4534 17.5624C40.7276 19.16 31.0444 23.0442 30.4426 22.3774C28.3369 20.0445 31.0425 15.6596 31.0661 9.07202V9.07202Z"
+                    fill="white" stroke="white" stroke-width="1.42775" />
+                <path
+                    d="M56.3197 9.26526C53.1831 12.1817 49.1982 13.3292 46.979 16.7008C45.5104 18.0373 54.1592 22.6904 54.746 22.035C56.3751 20.2155 56.6312 18.5108 56.3197 9.26526Z"
+                    fill="white" stroke="white" stroke-width="1.37352" />
+                <path
+                    d="M18.6272 42.0043L8.34633 29.6782V42.0043H0V0.549072H8.34633V24.2614L16.4163 14.3675H26.3103L16.1399 26.8593L28.7423 42.0043H18.6272Z"
+                    fill="white" />
+                <path
+                    d="M40.5708 42.6121C36.9964 42.6121 33.9563 41.1934 31.4506 38.356C28.9817 35.5187 27.7473 32.1286 27.7473 28.1857C27.7473 24.2429 28.9817 20.8527 31.4506 18.0153C33.9563 15.1779 36.9964 13.7593 40.5708 13.7593C43.7398 13.7593 46.2455 14.8832 48.088 17.131L49.2664 15.693L56.4343 14.3673V42.0041H48.088V39.2404C46.2455 41.4882 43.7398 42.6121 40.5708 42.6121ZM37.8623 33.1051C39.0415 34.3948 40.5707 35.0396 42.45 35.0396C44.3293 35.0396 45.8402 34.3948 46.9825 33.1051C48.1617 31.8154 48.7513 30.1756 48.7513 28.1857C48.7513 26.1959 48.1617 24.5561 46.9825 23.2664C45.8402 21.9766 44.3293 21.3317 42.45 21.3317C40.5707 21.3317 39.0415 21.9766 37.8623 23.2664C36.72 24.5561 36.1489 26.1959 36.1489 28.1857C36.1489 30.1756 36.72 31.8154 37.8623 33.1051V33.1051Z"
+                    fill="white" />
+                <path
+                    d="M77.383 42.3358C74.1403 42.3358 71.4687 41.4514 69.3683 39.6826C67.3048 37.877 66.273 35.2792 66.273 31.8891V21.6082H60.7457V14.3674H66.273V6.68433H74.6194V14.3674H82.3577V21.6082H74.6194V30.1756C74.6194 31.8338 74.9878 33.0314 75.7248 33.7684C76.4618 34.5054 77.6594 34.8739 79.3176 34.8739C80.5705 34.8739 81.5838 34.708 82.3577 34.3764V41.7831C81.1417 42.1516 79.4834 42.3358 77.383 42.3358V42.3358Z"
+                    fill="white" />
+                <path
+                    d="M96.2312 40.7328C95.0889 41.8751 93.707 42.4462 92.0857 42.4462C90.4643 42.4462 89.064 41.8751 87.8849 40.7328C86.7425 39.5536 86.1714 38.1534 86.1714 36.532C86.1714 34.9106 86.7425 33.5288 87.8849 32.3865C89.064 31.2073 90.4643 30.6177 92.0857 30.6177C93.707 30.6177 95.0889 31.2073 96.2312 32.3865C97.4104 33.5288 98 34.9106 98 36.532C98 38.1534 97.4104 39.5536 96.2312 40.7328Z"
+                    fill="white" />
+            </svg>
+            <h2>a self-taught web developer and designer.</h2>
+        </div>
+        <div class="hint">&darr; scroll down to see more &darr;</div>
+    </main>
+    <section>
+        <div>
+            <h1>About me</h1>
+            <p>I'm Kat, or Kat21.<br>I'm a self-taught front and back end web developer and designer. I'm currently
+                learning a lot about building web applications using Node.js
+
+        </div>
+    </section>
+    <section>
+        <h1 class="header">
+            Projects
+        </h1>
+        <div class="projects">
+            <div class="project">
+                <div class="side">
+                    <img src="assets/labimg.png" class="card">
+                </div>
+                <div class="text">
+                    <h2>
+                        Zeon Lab
+                    </h2>
+                    <p>
+                        An open source multiplayer desktop environment for the web. <br> Collaborate, share, and build.
+                    </p>
+                </div>
+            </div>
+            <div class="project">
+                <div class="side">
+                    <img src="assets/labimg.png" class="card">
+                </div>
+                <div class="text">
+                    <h2>
+                        Zeon Lab
+                    </h2>
+                    <p>
+                        An open source multiplayer desktop environment for the web. <br> Collaborate, share, and build.
+                    </p>
+                </div>
+            </div>
+            <div class="project">
+                <div class="side">
+                    <img src="assets/labimg.png" class="card">
+                </div>
+                <div class="text">
+                    <h2>
+                        Zeon Lab
+                    </h2>
+                    <p>
+                        An open source multiplayer desktop environment for the web. <br> Collaborate, share, and build.
+                    </p>
+                </div>
+            </div>
+            <div class="project">
+                <div class="side">
+                    <img src="assets/labimg.png" class="card">
+                </div>
+                <div class="text">
+                    <h2>
+                        Zeon Lab
+                    </h2>
+                    <p>
+                        An open source multiplayer desktop environment for the web. <br> Collaborate, share, and build.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>
