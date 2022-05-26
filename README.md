@@ -1,2 +1,2 @@
 # Kats Website 
-The project repository for Kat21's website. Cuurently it's in development! :)
+The project repository for Kat21's website. Curently it's in development! :)
